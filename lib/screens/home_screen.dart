@@ -1,15 +1,15 @@
 import 'package:advanced_3/services/prefs_service.dart';
-import 'package:advanced_3/services/secure_service.dart';
+
+// import 'package:advanced_3/services/secure_service.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/user_model.dart';
 import '../widgets/custom_text_field.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -21,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
   }
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -37,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 25,),
+
               Image.asset("assets/images/logo_login.png", width: width * 0.75),
               const Text(
                 "Welcome back!",
@@ -101,7 +102,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   User user = User(id: "1", email: email, password: password);
                   PrefService.storeUser(user);
-
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(width * 0.45, 50),
@@ -137,15 +137,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       minimumSize: Size(width * 0.3, 40),
                       backgroundColor: const Color(0xff39579A),
                       shape: RoundedRectangleBorder(
-                        borderRadius:
-                        BorderRadius.circular(10.0), // Set the border radius
+                        borderRadius: BorderRadius.circular(
+                            10.0), // Set the border radius
                       ),
                     ),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(FontAwesomeIcons.facebookF, color: Colors.white, size: 15,),
-                        SizedBox( width: 5,),
+                        Icon(
+                          FontAwesomeIcons.facebookF,
+                          color: Colors.white,
+                          size: 15,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
                         Text(
                           "Facebook",
                           style: TextStyle(
@@ -154,28 +160,56 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox( width: 10,),
+                  const SizedBox(
+                    width: 10,
+                  ),
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(width * 0.3, 40),
                       backgroundColor: const Color(0xffDF4A32),
                       shape: RoundedRectangleBorder(
-                        borderRadius:
-                        BorderRadius.circular(10.0), // Set the border radius
+                        borderRadius: BorderRadius.circular(
+                            10.0), // Set the border radius
                       ),
                     ),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(FontAwesomeIcons.google, color: Colors.white, size: 15,),
-                        SizedBox( width: 5,),
+                        Icon(
+                          FontAwesomeIcons.google,
+                          color: Colors.white,
+                          size: 15,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
                         Text(
                           "Google",
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Don't have an account?",
+                    style: TextStyle(color: Colors.blueGrey),
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      "Sign Up",
+                      style: TextStyle(color: Colors.blue),
                     ),
                   ),
                 ],
