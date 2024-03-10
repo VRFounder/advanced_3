@@ -1,36 +1,27 @@
-import 'package:advanced_3/screens/register_screen.dart';
-import 'package:advanced_3/services/prefs_service.dart';
-
-// import 'package:advanced_3/services/secure_service.dart';
+import 'package:advanced_3/screens/home_screen.dart';
+import 'package:advanced_3/services/secure_service.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
 
+import '../model/account_model.dart';
 import '../model/user_model.dart';
+import '../services/prefs_service.dart';
 import '../widgets/custom_text_field.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    final TextEditingController personController = TextEditingController();
+    final TextEditingController phoneController = TextEditingController();
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController confirmPasswordController = TextEditingController();
+    var width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Container(
           width: width,
@@ -39,10 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-
-              Image.asset("assets/images/logo_login.png", width: width * 0.75),
               const Text(
-                "Welcome back!",
+                "Let's Get Started!",
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -50,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const Text(
-                "Log in to your existing account of Q Allure",
+                "Create account to Q Allure to get all features",
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.blueGrey,
@@ -62,9 +51,9 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: CustomTextField(
-                  controller: _emailController,
+                  controller: personController,
                   iconData: Icons.person_outline,
-                  hintText: "enter your email...",
+                  hintText: "enter your name and surname...",
                 ),
               ),
               const SizedBox(
@@ -73,7 +62,29 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: CustomTextField(
-                  controller: _passwordController,
+                  controller: emailController,
+                  iconData: Icons.mail_outline,
+                  hintText: "enter your mail...",
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: CustomTextField(
+                  controller: phoneController,
+                  iconData: Icons.phone_iphone_outlined,
+                  hintText: "enter your phone number...",
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: CustomTextField(
+                  controller: passwordController,
                   iconData: Icons.lock_outline_rounded,
                   hintText: "enter your password...",
                   isPassword: true,
@@ -82,34 +93,35 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 10,
               ),
-              Container(
-                alignment: Alignment.centerRight,
-                padding: const EdgeInsets.only(right: 20),
-                child: TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "Forgot password?",
-                    style: TextStyle(color: Colors.blueGrey),
-                  ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: CustomTextField(
+                  controller: confirmPasswordController,
+                  iconData: Icons.lock_outline_rounded,
+                  hintText: "confirm your password...",
+                  isPassword: true,
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 40,
               ),
               ElevatedButton(
                 onPressed: () {
-                  String email = _emailController.text;
-                  String password = _passwordController.text;
+                  String email = emailController.text;
+                  String name = personController.text;
+                  String phone = phoneController.text;
+                  String password = passwordController.text;
+                  String confirmPassword = confirmPasswordController.text;
 
-                  User user = User(email: email, password: password);
-                  PrefService.storeUser(user);
+                  Account user = Account(name: name, phone: phone, email: email, password: password);
+                  SecureService.storeAccount(user);
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(width * 0.45, 50),
                   backgroundColor: Colors.redAccent,
                   shape: RoundedRectangleBorder(
                     borderRadius:
-                        BorderRadius.circular(30.0), // Set the border radius
+                    BorderRadius.circular(30.0), // Set the border radius
                   ),
                 ),
                 child: const Text(
@@ -203,15 +215,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const Text(
-                    "Don't have an account?",
+                    "Already have an account?",
                     style: TextStyle(color: Colors.blueGrey),
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterScreen()));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
                     },
                     child: const Text(
-                      "Sign Up",
+                      "Login Here",
                       style: TextStyle(color: Colors.blue),
                     ),
                   ),
