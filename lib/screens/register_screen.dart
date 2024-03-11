@@ -21,7 +21,9 @@ class RegisterScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.grey.shade100,
+      ),
       body: SingleChildScrollView(
         child: Container(
           width: width,
@@ -125,7 +127,7 @@ class RegisterScreen extends StatelessWidget {
                   ),
                 ),
                 child: const Text(
-                  "LOG IN",
+                  "Create",
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
